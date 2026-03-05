@@ -47,3 +47,13 @@ create table tests (
  seq integer,
  created_at timestamptz default now()
 );
+-- Controle de sequência de protocolos
+
+create table cc_test_counters (
+ id uuid primary key default gen_random_uuid(),
+ cc_id uuid references cc(id),
+ test_type varchar(3) references test_types(code),
+ last_seq integer default 0,
+ created_at timestamptz default now(),
+ unique(cc_id, test_type)
+);
